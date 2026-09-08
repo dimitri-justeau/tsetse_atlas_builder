@@ -1,0 +1,134 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}{% endblock title %}
+
+<!-- Specific CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <main class='main-content bgc-grey-100'>
+
+      <div id='mainContent'>
+
+        <div class="masonry-item col-12">
+          <div class="peers fxw-nw@lg+ ai-s">
+            <div class="peer peer-greed w-70p@lg+ w-100@lg- p-5 text-center">
+              <div class="layers">
+                <div class="layer w-100">
+                  <h3>Préfecture de {{ prefecture["name"] }}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="masonry-item col-12">
+          <div class="bd bgc-white">
+            <div class="peers fxw-nw@lg+ ai-s">
+              <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+                <div class="layers">
+                  <div class="layer w-100">
+                    <div id="map"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row gap-20 masonry pos-r">
+          <div class="masonry-sizer col-md-6"></div>
+          <div class="masonry-item  w-100">
+            <div class="row gap-20">
+              <!-- #Total traps ==================== -->
+              <div class='col-md-3'>
+                <div class="layers bd bgc-white p-20">
+                  <div class="layer w-100 mB-10">
+                    <h5 class="lh-1 text-center">Nombre total de pièges</h5>
+                  </div>
+                  <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <span
+                            data-purecounter-start="0"
+                            data-purecounter-end="{{ traps | length }}"
+                            class="purecounter">
+                            0
+                        </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- #Total tsetse ==================== -->
+              <div class='col-md-3'>
+                <div class="layers bd bgc-white p-20">
+                  <div class="layer w-100 mB-10">
+                    <h5 class="lh-1 text-center">Nombre de mouches capturées</h5>
+                  </div>
+                  <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <span
+                            data-purecounter-start="0"
+                            data-purecounter-end="{{ total_tsetse }}"
+                            class="purecounter">
+                            0
+                        </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- # Nb tsetse sepcies ==================== -->
+              <div class='col-md-3'>
+                <div class="layers bd bgc-white p-20">
+                  <div class="layer w-100 mB-10">
+                    <h5 class="lh-1 text-center">Espèces de tsetse observées</h5>
+                  </div>
+                  <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <span
+                            data-purecounter-start="0"
+                            data-purecounter-end="{{ total_tsetse_species }}"
+                            class="purecounter">
+                            0
+                        </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- # Nb habitat described ==================== -->
+              <div class='col-md-3'>
+                <div class="layers bd bgc-white p-20">
+                  <div class="layer w-100 mB-10">
+                    <h5 class="lh-1 text-center">Nombre d'habitats décrits</h5>
+                  </div>
+                  <div class="layer w-100">
+                    <div class="peers ai-sb fxw-nw">
+                        <span
+                            data-purecounter-start="0"
+                            data-purecounter-end="0"
+                            class="_purecounter w-100p text-center">
+                            -
+                        </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+    var current = "p_{{ prefecture['name'] }}";
+</script>
+<script  src="{{ config.ASSETS_ROOT }}/js/prefecture.js"></script>
+{% endblock javascripts %}

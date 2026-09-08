@@ -1,0 +1,23 @@
+{
+"type": "FeatureCollection",
+"name": "Kindia_p_traps",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "code": "KIN1", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Koliagbé", "total_tsetse": 0 }, "geometry": { "type": "Point", "coordinates": [ -12.992741838097572, 9.927373733371496 ] } },
+{ "type": "Feature", "properties": { "code": "KIN2", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Daboya", "total_tsetse": 17 }, "geometry": { "type": "Point", "coordinates": [ -12.966953339688146, 9.899042058554885 ] } },
+{ "type": "Feature", "properties": { "code": "KIN3", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Daboya", "total_tsetse": 8 }, "geometry": { "type": "Point", "coordinates": [ -12.965574736273949, 9.899572503931388 ] } },
+{ "type": "Feature", "properties": { "code": "KIN4", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Daboya", "total_tsetse": 0 }, "geometry": { "type": "Point", "coordinates": [ -12.962285289102573, 9.903619127103591 ] } },
+{ "type": "Feature", "properties": { "code": "KIN5", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Daboya", "total_tsetse": 1 }, "geometry": { "type": "Point", "coordinates": [ -12.955533396452665, 9.905495289713144 ] } },
+{ "type": "Feature", "properties": { "code": "KIN6", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Tinguilima", "total_tsetse": 0 }, "geometry": { "type": "Point", "coordinates": [ -12.611146559938788, 9.968465846031904 ] } },
+{ "type": "Feature", "properties": { "code": "KIN7", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Tinguilima", "total_tsetse": 19 }, "geometry": { "type": "Point", "coordinates": [ -12.613220745697618, 9.967504357919097 ] } },
+{ "type": "Feature", "properties": { "code": "KIN8", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Kaali", "total_tsetse": 2 }, "geometry": { "type": "Point", "coordinates": [ -12.698802072554827, 9.934855168685317 ] } },
+{ "type": "Feature", "properties": { "code": "KIN9", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Hafia", "total_tsetse": 17 }, "geometry": { "type": "Point", "coordinates": [ -12.704095579683781, 9.965695878490806 ] } },
+{ "type": "Feature", "properties": { "code": "KIN10", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_name": "Hafia", "total_tsetse": 9 }, "geometry": { "type": "Point", "coordinates": [ -12.701009279116988, 9.98072873800993 ] } },
+{ "type": "Feature", "properties": { "code": "KIN11", "start_date": "2026-04-23", "end_date": "2026-04-25", "locality_name": "Yembering", "total_tsetse": 11 }, "geometry": { "type": "Point", "coordinates": [ -12.775214351713657, 9.841844541952014 ] } },
+{ "type": "Feature", "properties": { "code": "KIN12", "start_date": "2026-04-23", "end_date": "2026-04-25", "locality_name": "Yembering", "total_tsetse": 29 }, "geometry": { "type": "Point", "coordinates": [ -12.752033360302448, 9.850092083215714 ] } },
+{ "type": "Feature", "properties": { "code": "KIN13", "start_date": "2026-04-23", "end_date": "2026-04-25", "locality_name": "Yembering", "total_tsetse": 10 }, "geometry": { "type": "Point", "coordinates": [ -12.751664724200964, 9.849437959492207 ] } },
+{ "type": "Feature", "properties": { "code": "KIN14", "start_date": "2026-04-23", "end_date": "2026-04-25", "locality_name": "Yembering", "total_tsetse": 0 }, "geometry": { "type": "Point", "coordinates": [ -12.76387388817966, 9.851898048073053 ] } },
+{ "type": "Feature", "properties": { "code": "KIN15", "start_date": "2026-04-23", "end_date": "2026-04-25", "locality_name": "Kounadia", "total_tsetse": 1 }, "geometry": { "type": "Point", "coordinates": [ -12.813538508489728, 9.874430280178785 ] } },
+{ "type": "Feature", "properties": { "code": "KIN16", "start_date": "2026-04-23", "end_date": "2026-04-25", "locality_name": "Khilissi", "total_tsetse": 2 }, "geometry": { "type": "Point", "coordinates": [ -12.879613470286131, 9.948810953646898 ] } }
+]
+}
