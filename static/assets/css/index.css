@@ -10800,7 +10800,7 @@ a {
 body {
   font-family: Roboto, -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
-  color: #72777a;
+  color: #4e4e4e;
   line-height: 1.5;
   letter-spacing: 0.2px;
   overflow-x: hidden;
@@ -10925,7 +10925,7 @@ a.btn:hover {
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
   .sidebar {
-    width: 70px;
+    width: 0px;
   }
   .sidebar .sidebar-inner .sidebar-logo {
     border-bottom: 1px solid transparent;
@@ -11007,7 +11007,7 @@ a.btn:hover {
   line-height: calc(65px - 1px);
 }
 .sidebar-logo .mobile-toggle a {
-  color: #72777a;
+  color: #4e4e4e;
 }
 @media screen and (max-width: 991px) {
   .sidebar-logo .mobile-toggle {
@@ -11082,7 +11082,7 @@ a.btn:hover {
   line-height: 25px;
 }
 .sidebar-menu li a {
-  color: #72777a;
+  color: #4e4e4e;
   transition: all 0.3s ease;
 }
 .sidebar-menu li a:hover, .sidebar-menu li a:focus {
@@ -11138,7 +11138,7 @@ a.btn:hover {
 
 @media screen and (min-width: 1440px) {
   .is-collapsed .sidebar {
-    width: 70px;
+    width: 0px;
   }
   .is-collapsed .sidebar .sidebar-inner .sidebar-logo {
     border-bottom: 1px solid transparent;
@@ -11243,7 +11243,7 @@ a.btn:hover {
 }
 .header .header-container .nav-left > li > a,
 .header .header-container .nav-right > li > a {
-  color: #72777a;
+  color: #4e4e4e;
   display: block;
   line-height: 65px;
   min-height: 65px;
@@ -11396,7 +11396,7 @@ a.btn:hover {
 }
 @media screen and (min-width: 992px) and (max-width: 1439px) {
   .page-container {
-    padding-left: 70px;
+    padding-left: 0px;
   }
 }
 @media screen and (max-width: 991px) {
@@ -11440,7 +11440,7 @@ a.btn:hover {
 }
 
 .is-collapsed .page-container {
-  padding-left: 70px;
+  padding-left: 0px;
 }
 @media screen and (max-width: 991px) {
   .is-collapsed .page-container {
@@ -61690,23 +61690,23 @@ footer {
 }
 
 .c-grey-700, .cH-grey-700:hover {
-  color: #72777a !important;
+  color: #4e4e4e !important;
 }
 
 .bgc-grey-700, .bgcH-grey-700:hover {
-  background-color: #72777a !important;
+  background-color: #4e4e4e !important;
 }
 
 .bdc-grey-700, .bdcH-grey-700:hover {
-  border-color: #72777a !important;
+  border-color: #4e4e4e !important;
 }
 
 .fill-grey-700, .fillH-grey-700:hover {
-  fill: #72777a !important;
+  fill: #4e4e4e !important;
 }
 
 .str-grey-700, .strH-grey-700:hover {
-  stroke: #72777a !important;
+  stroke: #4e4e4e !important;
 }
 
 .c-grey-800, .cH-grey-800:hover {
@@ -68639,7 +68639,7 @@ table.dataTable.no-footer {
   padding: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  color: #72777a;
+  color: #4e4e4e;
   transition: all 0.2s ease-in;
 }
 .dataTables_wrapper .dataTables_filter {
@@ -68659,22 +68659,22 @@ table.dataTable.no-footer {
   font-size: 14px;
   margin-left: 15px;
   padding: 5px;
-  color: #72777a;
+  color: #4e4e4e;
   transition: all 0.2s ease-in;
 }
 .dataTables_wrapper .dataTables_info {
-  color: #72777a;
+  color: #4e4e4e;
   float: left;
 }
 .dataTables_wrapper .dataTables_processing {
   color: #313435;
 }
 .dataTables_wrapper .dataTables_paginate {
-  color: #72777a;
+  color: #4e4e4e;
   float: right;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-  color: #72777a !important;
+  color: #4e4e4e !important;
   padding: 6px 12px;
   border-radius: 2px;
   margin-right: 10px;
@@ -68740,7 +68740,7 @@ table.dataTable.no-footer {
   padding: 5px;
   margin-left: 5px;
   margin-right: 5px;
-  color: #72777a;
+  color: #4e4e4e;
   transition: all 0.2s ease-in;
 }
 .dataTables_wrapper .dataTables_filter {
@@ -68760,22 +68760,22 @@ table.dataTable.no-footer {
   font-size: 14px;
   margin-left: 15px;
   padding: 5px;
-  color: #72777a;
+  color: #4e4e4e;
   transition: all 0.2s ease-in;
 }
 .dataTables_wrapper .dataTables_info {
-  color: #72777a;
+  color: #4e4e4e;
   float: left;
 }
 .dataTables_wrapper .dataTables_processing {
   color: #313435;
 }
 .dataTables_wrapper .dataTables_paginate {
-  color: #72777a;
+  color: #4e4e4e;
   float: right;
 }
 .dataTables_wrapper .dataTables_paginate .paginate_button {
-  color: #72777a !important;
+  color: #4e4e4e !important;
   padding: 6px 12px;
   border-radius: 2px;
   margin-right: 10px;
@@ -68818,7 +68818,7 @@ table.dataTable.no-footer {
   text-align: center;
   padding: 15px;
   background-color: transparent;
-  color: #72777a;
+  color: #4e4e4e;
   font-size: 12px;
   text-transform: uppercase;
   border-right-width: 0;
@@ -69109,8 +69109,13 @@ table.dataTable.no-footer {
 .site-title {
     height: 100%;
     display:flex;
+    text-align: center;
     align-items: center;
     justify-content: center;
+}
+
+.current-title {
+    margin-top: 10px;
 }
 
 @property --from {
@@ -69125,4 +69130,6 @@ table.dataTable.no-footer {
     text-align: center;
 }
 
-/*# sourceMappingURL=index.css.map */
+.leaflet-top {
+    z-index: 700 !important;
+}

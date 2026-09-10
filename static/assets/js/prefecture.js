@@ -1,3 +1,19 @@
+$('.sidebar-toggle').on('click', function (e) {
+  $('.app').toggleClass('is-collapsed');
+  e.preventDefault();
+});
+/**
+ * Wait untill sidebar fully toggled (animated in/out)
+ * then trigger window resize event in order to recalculate
+ * masonry layout widths and gutters.
+ */
+$('#sidebar-toggle').click(function (e) {
+  e.preventDefault();
+  setTimeout(function () {
+    window.dispatchEvent(window.EVENT);
+  }, 300);
+});
+
 var offset = $('#sidebar-container li').first().position().top;
 $('#sidebar-container').scrollTop($('#' + current).position().top - offset);
 
