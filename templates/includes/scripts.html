@@ -17,4 +17,15 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
 
-<script>var asset_root = "{{ config.ASSETS_ROOT }}";</script>
+<script src='https://unpkg.com/simple-statistics@8.0.0/dist/simple-statistics.min.js'>
+</script>
+
+<script src="https://unpkg.com/chroma-js@3.2.0/dist/chroma.min.cjs"></script>
+
+<link rel="stylesheet" href="https://balladaniel.github.io/leaflet-dataclassification/leaflet-dataclassification.css" />
+<script src="https://balladaniel.github.io/leaflet-dataclassification/leaflet-dataclassification.js"></script>
+
+<script>
+    var asset_root = "{{ config.ASSETS_ROOT }}";
+    var root = "{{ root }}";
+</script>

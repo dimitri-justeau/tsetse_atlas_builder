@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "KIN16",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 31, "code": "KIN16", "start_date": "2026-04-23", "end_date": "2026-04-25", "locality_id": 14, "trap_id": 31, "zone": "forest_dominated", "vegetation": "gallery_forest", "soil_main": "sandy", "soil_secondary": null, "river": true, "waste_pollution": "very_high", "anthropization": "moderate", "phytosanitary_products": null, "livestock": false, "logging": false, "fire_marks": false, "mining_related_activity": false, "elevation": 341, "total_tsetse": 2 }, "geometry": { "type": "Point", "coordinates": [ -12.879613470286131, 9.948810953646898 ] } }
+]
+}

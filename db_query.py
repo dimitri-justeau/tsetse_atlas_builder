@@ -110,3 +110,28 @@ def get_prefecture_tsetse_species(prefecture_id):
         """.format(prefecture_id), engine
     )
     return res["nb_species"].iloc[0]
+
+def get_trap(trap_key):
+    engine = get_engine()
+    res = gpd.read_postgis(
+        """
+            SELECT tsetse_trap.*, habitat.*, SUM(tsetse_catch.count) as total_tsetse FROM tsetse_trap
+                INNER JOIN habitat ON tsetse_trap.id = habitat.trap_id
+                LEFT JOIN tsetse_catch ON tsetse_catch.trap_id = tsetse_trap.id
+            WHERE tsetse_trap.code = '{}'
+            GROUP BY (tsetse_trap.id, habitat.trap_id);
+        """.format(trap_key), engine, geom_col="location"
+    )
+    res.drop(columns=["notes"], inplace=True)
+    return res
+
+def get_trap_tsetse_species(trap_code):
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT COUNT(DISTINCT tsetse_catch.species) as nb_species FROM tsetse_catch
+            INNER JOIN tsetse_trap ON tsetse_trap.id = tsetse_catch.trap_id
+            WHERE tsetse_trap.code = '{}';
+        """.format(trap_code), engine
+    )
+    return res["nb_species"].iloc[0]

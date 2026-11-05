@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "TEL14",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 14, "code": "TEL14", "start_date": "2026-04-19", "end_date": "2026-04-21", "locality_id": 5, "trap_id": 14, "zone": "woodland_dominated", "vegetation": "woodland", "soil_main": "sandy_clay", "soil_secondary": null, "river": false, "waste_pollution": "low", "anthropization": "high", "phytosanitary_products": null, "livestock": true, "logging": true, "fire_marks": true, "mining_related_activity": false, "elevation": 432, "total_tsetse": 0 }, "geometry": { "type": "Point", "coordinates": [ -13.027673084288836, 10.846302732825279 ] } }
+]
+}

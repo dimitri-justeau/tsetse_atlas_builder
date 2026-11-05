@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "KIN4",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 19, "code": "KIN4", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_id": 8, "trap_id": 19, "zone": "agricultural", "vegetation": "palm_plantation", "soil_main": "clayey_sand", "soil_secondary": "sandy_clay", "river": false, "waste_pollution": "low", "anthropization": "very_high", "phytosanitary_products": null, "livestock": null, "logging": null, "fire_marks": null, "mining_related_activity": null, "elevation": 396, "total_tsetse": 0 }, "geometry": { "type": "Point", "coordinates": [ -12.962285289102573, 9.903619127103591 ] } }
+]
+}

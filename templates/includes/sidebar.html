@@ -5,10 +5,10 @@
           <div class="sidebar-logo">
             <div class="peers ai-c fxw-nw">
               <div class="peer peer-greed">
-                <a class="sidebar-link td-n" href="./index.html">
+                <a class="sidebar-link td-n" href="{{ root }}/index.html">
                   <div class="peers ai-c fxw-nw">
 <!--                    <div class="logo">-->
-                      <img class="atlas-logo" src="{{ config.ASSETS_ROOT }}/images/logo_atlas_small.png" alt="">
+                      <img class="atlas-logo" src="{{ root }}/{{ config.ASSETS_ROOT }}/images/logo_atlas_small.png" alt="">
 <!--                    </div>-->
                   </div>
                 </a>
@@ -26,9 +26,9 @@
           <!-- ### $Sidebar Menu ### -->
           <ul id="sidebar-container" class="sidebar-menu scrollable pos-r">
             <li class="nav-item">
-              <a class='sidebar-link' href=./index.html>
+              <a class='sidebar-link' href='{{ root }}/index.html'>
                 <span class="icon-holder">
-                  <img src="{{ config.ASSETS_ROOT }}/fonts/icons/GN.svg" alt="Guinea flag"></i>
+                  <img src="{{ root }}/{{ config.ASSETS_ROOT }}/fonts/icons/GN.svg" alt="Guinea flag"></i>
                 </span>
                 {% if current == "national" %}
                 <span class="national-label current"><strong>Données nationales</strong></span>
@@ -39,7 +39,7 @@
             </li>
             {% for index, r in regions.iterrows() %}
               <li id="r_{{ r['name'] }}" class="nav-item">
-                <a class='sidebar-link' href='{{ r["name"] }}.html'>
+                <a class='sidebar-link' href='{{ root }}/regions/{{ r["name"] }}.html'>
                   <span class="icon-holder">
                     <i class="c-green-900 ti-map"></i>
                   </span>
@@ -52,7 +52,7 @@
               </li>
               {% for index, p in prefectures[r["id"]].iterrows() %}
                 <li id="p_{{ p['name'] }}" class="nav-item">
-                  <a class='sidebar-link' href={{ p["name"] }}_p.html>
+                  <a class='sidebar-link' href='{{ root }}/prefectures/{{ p["name"] }}_p.html'>
                   {% if current == "p_" + p["name"] %}
                   <span class="prefecture-label current">- Préfecture de <strong>{{ p["name"] }}</strong></span>
                   {% else %}

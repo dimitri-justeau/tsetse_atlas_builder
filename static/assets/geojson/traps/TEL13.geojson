@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "TEL13",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "id": 13, "code": "TEL13", "start_date": "2026-04-19", "end_date": "2026-04-21", "locality_id": 5, "trap_id": 13, "zone": "rural_populated", "vegetation": "gallery_forest", "soil_main": "clayey_silt", "soil_secondary": null, "river": true, "waste_pollution": "very_high", "anthropization": "high", "phytosanitary_products": null, "livestock": true, "logging": true, "fire_marks": true, "mining_related_activity": false, "elevation": 424, "total_tsetse": 6 }, "geometry": { "type": "Point", "coordinates": [ -13.028427455574274, 10.846196785569191 ] } }
+]
+}

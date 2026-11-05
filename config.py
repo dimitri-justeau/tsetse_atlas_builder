@@ -12,7 +12,7 @@ class Config(object):
     DEBUG = (os.getenv('DEBUG', 'False') == 'True')
 
     # Assets Management
-    ASSETS_ROOT = os.getenv('ASSETS_ROOT', './static/assets')
+    ASSETS_ROOT = os.getenv('ASSETS_ROOT', 'static/assets')
 
     # App Config - the minimal footprint
     SECRET_KEY = os.getenv('SECRET_KEY', 'S#perS3crEt_9999')

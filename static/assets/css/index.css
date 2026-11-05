@@ -69106,6 +69106,10 @@ table.dataTable.no-footer {
     height: 60vh;
 }
 
+#map_trap {
+    height: 30vh;
+}
+
 .site-title {
     height: 100%;
     display:flex;

@@ -28,9 +28,9 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-var region_path = asset_root + "/geojson/" + current + ".geojson";
+var region_path = root + "/" + asset_root + "/geojson/regions/" + current + ".geojson";
 var region_geojson = null;
-var region_traps_path = asset_root + "/geojson/" + current + "_traps.geojson";
+var region_traps_path = root + "/" + asset_root + "/geojson/regions/" + current + "_traps.geojson";
 var region_traps_geojson = null;
 
 fetch(region_path)
@@ -44,34 +44,34 @@ fetch(region_path)
     })
     .catch(error => console.error('Erreur lors du chargement du fichier GeoJSON :', error));
 
-function getColor(feature) {
-    var d = feature.properties.total_tsetse;
-    if (d > 0) {
-        return '#2ecc71';
-    } else {// Green
-        return '#f39c12'; // Orange
-    }
-}
-
-function getRadius(feature) {
-    var d = feature.properties.total_tsetse;
-    return 8 + 0.3*d;
-}
-
 fetch(region_traps_path)
     .then(response => response.json())
     .then(data => {
-        region_traps_geojson = L.geoJSON(data, {
-            pointToLayer: function (feature, latlng) {
-                var dynamicOptions = {
-                    radius: getRadius(feature),
-                    fillColor: getColor(feature),
-                    color: "#000",
-                    weight: 1,
-                    fillOpacity: 0.9
-                };
-                return L.circleMarker(latlng, dynamicOptions);
-            }
+        function tooltip(feature, layer) {
+            layer.bindTooltip(String("<b>" + feature.properties.code + "</b>: " + feature.properties.total_tsetse) +' mouches');
+            layer.on({
+                click: function(e) {
+                    window.location.href = root + "/" + "traps/" + feature.properties.code + ".html";
+                }
+            });
+        }
+        let classes= [0, 1, 5, 10, 15]
+        if (data.features.length <= 5) {
+            classes = [0, 1, 10]
+        }
+        region_traps_geojson = L.dataClassification(data, {
+            // required:
+            mode: 'manual',
+            classes: classes,
+            field: 'total_tsetse',
+            colorRamp: 'YlOrRd',
+            legendTemplate: {
+                highest: '{low} mouches et plus',
+                middle: '{low} à {high} mouches',
+                lowest: 'Pas de capture',
+            },
+            legendTitle: 'Nombre de mouches capturées',
+            onEachFeature: tooltip,
         }).addTo(map);
         region_traps_geojson.bringToFront();
     })
