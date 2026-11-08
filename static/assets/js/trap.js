@@ -15,7 +15,7 @@ $('#sidebar-toggle').click(function (e) {
 });
 
 var map = L.map(
-    'map_trap', {
+    'map-trap', {
         zoomSnap: 0.25,
         zoomDelta: 0.25
     }).setView([10.0, -11.1], 7.5);
