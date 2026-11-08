@@ -55,16 +55,28 @@ fetch(region_traps_path)
                 }
             });
         }
-        let classes= [0, 1, 5, 10, 15]
+        let classes = [0, 1, 5, 10, 15]
+        let colorRamp = [
+            chroma("#ffffff").alpha(0.7),
+            chroma("#fecc5c").alpha(0.7),
+            chroma("#fd8d3c").alpha(0.7),
+            chroma("#f03b20").alpha(0.7),
+            chroma("#bd0026").alpha(0.7)
+        ]
         if (data.features.length <= 5) {
             classes = [0, 1, 10]
+            colorRamp = [
+                chroma("#ffffff").alpha(0.7),
+                chroma("#feb24c").alpha(0.7),
+                chroma("#f03b20").alpha(0.7)
+            ]
         }
         region_traps_geojson = L.dataClassification(data, {
             // required:
             mode: 'manual',
             classes: classes,
             field: 'total_tsetse',
-            colorRamp: 'YlOrRd',
+            colorRamp: colorRamp,
             legendTemplate: {
                 highest: '{low} mouches et plus',
                 middle: '{low} à {high} mouches',
