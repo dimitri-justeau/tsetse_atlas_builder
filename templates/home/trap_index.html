@@ -7,295 +7,153 @@
 
 {% block content %}
 
-    <main class='main-content bgc-grey-100'>
-
-      <div id='mainContent'>
-
-        <div class="masonry-item col-12">
-          <div class="peers fxw-nw@lg+ ai-s">
-            <div class="peer peer-greed w-70p@lg+ w-100@lg- p-5 text-center">
-              <div class="layers">
-                <div class="layer w-100">
-                  <h2 class="current-title">Piège {{ trap_code }}</h2>
+<div class="container-fluid md-12">
+    <div class="row mb-3">
+        <h2 class="current-title">Piège {{ trap_code }}</h2>
+    </div>
+    <div class="row mb-3">
+        <div id="map"></div>
+    </div>
+    <div class="row mb-3">
+        <div class="col ps-0">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Informations générales</h5>
                 </div>
-              </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span><b>Localité</b>: {{ locality }} </span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Préfecture</b>: {{ prefecture }} </span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Région</b>: {{ region }} </span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Collecteurs</b>: {{ collectors }} </span>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-
-        <div class="masonry-item col-12">
-          <div class="bd bgc-white">
-            <div class="peers fxw-nw@lg+ ai-s">
-              <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
-                <div class="layers">
-                  <div class="layer w-100">
-                    <div id="map_trap"></div>
-                  </div>
+        <div class="col pe-0">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Données entomologiques</h5>
                 </div>
-              </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span><b>Nombre de mouches capturées</b>: {{ total_tsetse }} </span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Espèces de tsetse observées</b>: {{ total_tsetse_species }} </span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Nombre de femeles</b>: {{ nb_female }} </span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Nombre de mâles</b>: {{ nb_male }} </span>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-
-        <div class="row gap-20 masonry pos-r">
-          <div class="masonry-sizer col-md-6"></div>
-          <div class="masonry-item  w-100">
-            <div class="row gap-20">
-
-              <!-- #Total tsetse ==================== -->
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Nombre de mouches capturées</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span
-                            data-purecounter-start="0"
-                            data-purecounter-end="{{ total_tsetse }}"
-                            class="purecounter">
-                            0
-                        </span>
-                    </div>
-                  </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col ps-0">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Description de l'habitat</h5>
                 </div>
-              </div>
-
-              <!-- # Nb tsetse sepcies ==================== -->
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Espèces de tsetse observées</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span
-                            data-purecounter-start="0"
-                            data-purecounter-end="{{ total_tsetse_species }}"
-                            class="purecounter">
-                            0
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- # Zone type ==================== -->
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Type de zone</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                            {{ trap["zone"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- # Vegetation type ==================== -->
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Type de végétation</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                            {{ trap["vegetation"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- # Altitude ==================== -->
-              {% if trap["elevation"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Altitude</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                            {{ trap["elevation"] }}m
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # Soil main type ==================== -->
-              {% if trap["soil_main"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Type de sol principal</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["soil_main"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # River ==================== -->
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Cours d'eau au moment de la capture</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["river"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- # Waste pollution ==================== -->
-              {% if trap["waste_pollution"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Niveau de pollution (déchets)</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["waste_pollution"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # Anthropization ==================== -->
-              {% if trap["anthropization"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Niveau d'anthropisation</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["anthropization"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # Phytosanitary ==================== -->
-              {% if trap["phytosanitary_products"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Présence de phytosanitaires</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["phytosanitary_products"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # Livestock ==================== -->
-              {% if trap["livestock"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Présence de bétail</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["livestock"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # Fire ==================== -->
-              {% if trap["fire_marks"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Traces de feu</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["fire_marks"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # Logging ==================== -->
-              {% if trap["logging"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Coupe du bois</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["logging"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
-              <!-- # Mining related activity ==================== -->
-              {% if trap["mining_related_activity"] is not none %}
-              <div class='col-md-3'>
-                <div class="layers bd bgc-white p-20">
-                  <div class="layer w-100 mB-10">
-                    <h5 class="lh-1 text-center">Activités minières (ou liées)</h5>
-                  </div>
-                  <div class="layer w-100">
-                    <div class="peers ai-sb fxw-nw">
-                        <span class="w-100p text-center">
-                          {{ trap["mining_related_activity"] }}
-                        </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {% endif %}
-
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span><b>Type de zone</b>:  {{ trap["zone"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Type de végétation</b>:  {{ trap["vegetation"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Nombre de plantes identifiées</b>: {{ nb_plant_identifications }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Nombre d'espèces de plantes identifiées</b>: {{ nb_plant_species }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Altitude</b>: {{ trap["elevation"] }}m</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Cours d'eau au moment de la capture</b>: {{ trap["river"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Type de sol principal</b>: {{ trap["soil_main"] }}</span>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-
-      </div>
-    </main>
+        <div class="col pe-0">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Pressions anthropiques</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <span><b>Niveau général d'anthropisation</b>: {{ trap["anthropization"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Niveau de pollution (déchets)</b>:  {{ trap["waste_pollution"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Présence de phytosanitaires</b>: {{ trap["phytosanitary_products"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Zone paturée</b>: {{ trap["livestock"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Traces de feu</b>: {{ trap["fire_marks"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Coupe de bois constatée</b>: {{ trap["logging"] }}</span>
+                    </li>
+                    <li class="list-group-item">
+                        <span><b>Activités minières (ou liées)</b>: {{ trap["mining_related_activity"] }}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col pe-0 ps-0">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Espèces de plantes identifiées</h5>
+                </div>
+                <table class="table table-bordered mb-0">
+                    <thead>
+                    <tr>
+                        <th>Nom complet</th>
+                        <th>Famille</th>
+                        <th>Genre</th>
+                        <th>Espèce</th>
+                        <th>Rang taxonomique</th>
+                        <th>Collecteur</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tax in plant_species %}
+                    <tr>
+                        <td>{{ tax.full_name }}</td>
+                        <td>{{ tax.family }}</td>
+                        <td>{{ tax.genus }}</td>
+                        <td>{{ tax.species }}</td>
+                        <td>{{ tax.rank }}</td>
+                        <td>{{ tax.collector }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock content %}
 
@@ -304,5 +162,5 @@
 <script>
     var current = "{{ trap_code }}";
 </script>
-<script  src="{{ root }}/{{ config.ASSETS_ROOT }}/js/trap.js"></script>
+<script src="{{ root }}/{{ config.ASSETS_ROOT }}/js/trap.js"></script>
 {% endblock javascripts %}

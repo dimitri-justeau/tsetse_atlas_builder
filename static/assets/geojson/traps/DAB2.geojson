@@ -3,6 +3,6 @@
 "name": "DAB2",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "id": 33, "code": "DAB2", "start_date": "2026-05-05", "end_date": "2026-05-07", "locality_id": 19, "trap_id": 33, "zone": "urban_populated", "vegetation": "gallery_forest", "soil_main": "sandy_silt", "soil_secondary": null, "river": true, "waste_pollution": "moderate", "anthropization": "high", "phytosanitary_products": null, "livestock": true, "logging": true, "fire_marks": false, "mining_related_activity": false, "elevation": 404, "total_tsetse": 6 }, "geometry": { "type": "Point", "coordinates": [ -10.932056, 10.846073 ] } }
+{ "type": "Feature", "properties": { "id": 33, "code": "DAB2", "start_date": "2026-05-05", "end_date": "2026-05-07", "locality_id": 19, "collectors": "Birnbaum P, Diallo NI, Justeau-Allaire D", "trap_id": 33, "zone": "urban_populated", "vegetation": "gallery_forest", "soil_main": "sandy_silt", "soil_secondary": null, "river": true, "waste_pollution": "moderate", "anthropization": "high", "phytosanitary_products": null, "livestock": true, "logging": true, "fire_marks": false, "mining_related_activity": false, "elevation": 404, "total_tsetse": 6 }, "geometry": { "type": "Point", "coordinates": [ -10.932056, 10.846073 ] } }
 ]
 }

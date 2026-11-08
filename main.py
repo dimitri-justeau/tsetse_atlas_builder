@@ -8,7 +8,11 @@ from jinja2 import Environment, FileSystemLoader
 from config import Config
 from db_query import get_regions, get_prefectures, get_all_prefectures, get_all_traps, get_region_traps, \
     get_prefecture_traps, get_total_tsetse_species, get_region_tsetse_species, get_prefecture_tsetse_species, get_trap, \
-    get_trap_tsetse_species
+    get_trap_tsetse_species, get_trap_plant_species, get_total_number_of_habitats, \
+    get_total_number_of_plants_identifications, get_total_number_of_plants_species, get_region_number_of_habitats, \
+    get_region_number_of_plants_species, get_prefecture_number_of_habitats, get_prefecture_number_of_plants_species, \
+    get_region_number_of_plants_identifications, get_prefecture_number_of_plants_identifications, get_trap_tsetse_males, \
+    get_trap_tsetse_females, get_trap_general_info
 
 labels = {
     'urban_populated': "Zone urbaine",
@@ -59,6 +63,7 @@ labels = {
     'very_high': "Très élevé",
     True: "Oui",
     False: "Non",
+    None: "Inconnu",
 }
 
 def translate_label(text):
@@ -110,7 +115,13 @@ if __name__ == '__main__':
     Path(os.path.join(Config.ASSETS_ROOT, "geojson", "traps")).mkdir(exist_ok=True)
     for index, trap in all_traps.iterrows():
         trap_data = get_trap(trap["code"])
+        trap_plant_species = get_trap_plant_species(trap["code"])
+        trap_infos = get_trap_general_info(trap["code"])
         individual_traps[index] = {
+            "locality": trap_infos["locality"].iloc[0],
+            "prefecture": trap_infos["prefecture"].iloc[0],
+            "region": trap_infos["region"].iloc[0],
+            "collectors": trap_infos["collectors"][0],
             "zone": translate_label(trap_data["zone"][0]),
             "vegetation": translate_label(trap_data["vegetation"][0]),
             "soil_main": translate_label(trap_data["soil_main"][0]),
@@ -127,6 +138,7 @@ if __name__ == '__main__':
             "start_date": trap_data["start_date"][0],
             "end_date": trap_data["end_date"][0],
             "total_tsetse": trap_data["total_tsetse"][0],
+            "plant_species": trap_plant_species.to_dict(orient="records")
         }
         trap_data.to_file(os.path.join(Config.ASSETS_ROOT, "geojson", "traps", "{}.geojson".format(trap["code"])), driver="GeoJSON")
     # Clear output dir
@@ -143,6 +155,9 @@ if __name__ == '__main__':
         traps=all_traps,
         total_tsetse=sum(all_traps["total_tsetse"]),
         total_tsetse_species=get_total_tsetse_species(),
+        nb_habitats=get_total_number_of_habitats(),
+        nb_plant_identifications=get_total_number_of_plants_identifications(),
+        nb_plant_species=get_total_number_of_plants_species(),
         current="national",
         root="."
     )
@@ -160,6 +175,9 @@ if __name__ == '__main__':
             traps=region_traps[index],
             total_tsetse=sum(region_traps[index]["total_tsetse"]),
             total_tsetse_species=get_region_tsetse_species(region["id"]),
+            nb_habitats=get_region_number_of_habitats(region["id"]),
+            nb_plant_identifications=get_region_number_of_plants_identifications(region["id"]),
+            nb_plant_species=get_region_number_of_plants_species(region["id"]),
             current="r_{}".format(region["name"]),
             root=".."
         )
@@ -177,6 +195,9 @@ if __name__ == '__main__':
             traps=prefecture_traps[index],
             total_tsetse=sum(prefecture_traps[index]["total_tsetse"]),
             total_tsetse_species=get_prefecture_tsetse_species(pref["id"]),
+            nb_habitats=get_prefecture_number_of_habitats(pref["id"]),
+            nb_plant_identifications=get_prefecture_number_of_plants_identifications(pref["id"]),
+            nb_plant_species=get_prefecture_number_of_plants_species(pref["id"]),
             current="p_{}".format(pref["name"]),
             root=".."
         )
@@ -191,9 +212,16 @@ if __name__ == '__main__':
             regions=regions,
             prefectures=prefectures,
             trap=individual_traps[index],
+            locality=individual_traps[index]["locality"],
+            region=individual_traps[index]["region"],
+            prefecture=individual_traps[index]["prefecture"],
+            collectors=individual_traps[index]["collectors"],
             trap_code=trap["code"],
             total_tsetse=individual_traps[index]["total_tsetse"],
             total_tsetse_species=get_trap_tsetse_species(trap["code"]),
+            nb_male=get_trap_tsetse_males(trap["code"]),
+            nb_female=get_trap_tsetse_females(trap["code"]),
+            plant_species=individual_traps[index]["plant_species"],
             current="{}".format(trap["code"]),
             root=".."
         )

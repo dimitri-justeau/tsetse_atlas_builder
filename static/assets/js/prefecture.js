@@ -77,5 +77,3 @@ fetch(prefecture_traps_path)
         prefecture_traps_geojson.bringToFront();
     })
     .catch(error => console.error('Erreur lors du chargement du fichier GeoJSON :', error));
-
-new PureCounter();

@@ -3,6 +3,6 @@
 "name": "KIN2",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "id": 17, "code": "KIN2", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_id": 8, "trap_id": 17, "zone": "forest_dominated", "vegetation": "gallery_forest", "soil_main": "clayey_silt", "soil_secondary": null, "river": true, "waste_pollution": "moderate", "anthropization": "high", "phytosanitary_products": true, "livestock": true, "logging": null, "fire_marks": null, "mining_related_activity": null, "elevation": 387, "total_tsetse": 17 }, "geometry": { "type": "Point", "coordinates": [ -12.966953339688146, 9.899042058554885 ] } }
+{ "type": "Feature", "properties": { "id": 17, "code": "KIN2", "start_date": "2026-04-22", "end_date": "2026-04-24", "locality_id": 8, "collectors": "Thiam A, Leno M, Mahaud S, Diallo NI, Bart JM, Justeau-Allaire D, Kagbadouno M", "trap_id": 17, "zone": "forest_dominated", "vegetation": "gallery_forest", "soil_main": "clayey_silt", "soil_secondary": null, "river": true, "waste_pollution": "moderate", "anthropization": "high", "phytosanitary_products": true, "livestock": true, "logging": null, "fire_marks": null, "mining_related_activity": null, "elevation": 387, "total_tsetse": 17 }, "geometry": { "type": "Point", "coordinates": [ -12.966953339688146, 9.899042058554885 ] } }
 ]
 }

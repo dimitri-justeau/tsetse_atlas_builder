@@ -1,0 +1,71 @@
+#sidebar-container {
+    position: sticky;
+    max-height: calc(100vh - 152px);
+    overflow-y: auto;
+}
+
+#dashboard-container {
+    position: sticky;
+    max-height: calc(100vh - 152px);
+    overflow-y: auto;
+}
+
+.atlas-logo {
+    margin: auto;
+}
+
+.region-label {
+    font-weight: 400;
+}
+
+.prefecture-label {
+    padding-left: 20px;
+    font-weight: 400;
+}
+
+.current {
+    color: #004e85;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#map {
+    height: 55vh;
+}
+
+#map_trap {
+    height: 30vh;
+}
+
+.site-title {
+    height: 100%;
+    display:flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.current-title {
+    max-width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+@property --from {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
+
+.purecounter {
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.leaflet-top {
+    z-index: 700 !important;
+}
+footer p {
+    margin-bottom: 0px;
+}

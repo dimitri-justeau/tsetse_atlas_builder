@@ -3,6 +3,6 @@
 "name": "COY1",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "id": 36, "code": "COY1", "start_date": "2026-09-15", "end_date": "2026-09-17", "locality_id": 21, "trap_id": 36, "zone": "urban_populated", "vegetation": "agroforestry", "soil_main": "silty", "soil_secondary": "silty_rock", "river": true, "waste_pollution": "low", "anthropization": "moderate", "phytosanitary_products": true, "livestock": false, "logging": false, "fire_marks": false, "mining_related_activity": false, "elevation": 16, "total_tsetse": 3 }, "geometry": { "type": "Point", "coordinates": [ -13.337288, 9.68395 ] } }
+{ "type": "Feature", "properties": { "id": 36, "code": "COY1", "start_date": "2026-09-15", "end_date": "2026-09-17", "locality_id": 21, "collectors": "Conté Y, Justeau-Allaire D, Kagbadouno M", "trap_id": 36, "zone": "urban_populated", "vegetation": "agroforestry", "soil_main": "silty", "soil_secondary": "silty_rock", "river": true, "waste_pollution": "low", "anthropization": "moderate", "phytosanitary_products": true, "livestock": false, "logging": false, "fire_marks": false, "mining_related_activity": false, "elevation": 16, "total_tsetse": 3 }, "geometry": { "type": "Point", "coordinates": [ -13.337288, 9.68395 ] } }
 ]
 }

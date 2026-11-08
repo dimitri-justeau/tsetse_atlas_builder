@@ -3,6 +3,6 @@
 "name": "TEL12",
 "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
 "features": [
-{ "type": "Feature", "properties": { "id": 12, "code": "TEL12", "start_date": "2026-04-19", "end_date": "2026-04-21", "locality_id": 5, "trap_id": 12, "zone": "forest_dominated", "vegetation": "gallery_forest", "soil_main": "clayey_silt", "soil_secondary": null, "river": true, "waste_pollution": "very_high", "anthropization": "high", "phytosanitary_products": null, "livestock": true, "logging": true, "fire_marks": true, "mining_related_activity": false, "elevation": 443, "total_tsetse": 1 }, "geometry": { "type": "Point", "coordinates": [ -13.029525149613619, 10.846364926546812 ] } }
+{ "type": "Feature", "properties": { "id": 12, "code": "TEL12", "start_date": "2026-04-19", "end_date": "2026-04-21", "locality_id": 5, "collectors": "Thiam A, Leno M, Mahaud S, Diallo NI, Bart JM, Justeau-Allaire D, Kagbadouno M", "trap_id": 12, "zone": "forest_dominated", "vegetation": "gallery_forest", "soil_main": "clayey_silt", "soil_secondary": null, "river": true, "waste_pollution": "very_high", "anthropization": "high", "phytosanitary_products": null, "livestock": true, "logging": true, "fire_marks": true, "mining_related_activity": false, "elevation": 443, "total_tsetse": 1 }, "geometry": { "type": "Point", "coordinates": [ -13.029525149613619, 10.846364926546812 ] } }
 ]
 }

@@ -41,5 +41,3 @@ fetch(trap_path)
         map.fitBounds(trap_geojson.getBounds());
     })
     .catch(error => console.error('Erreur lors du chargement du fichier GeoJSON :', error));
-
-new PureCounter();
