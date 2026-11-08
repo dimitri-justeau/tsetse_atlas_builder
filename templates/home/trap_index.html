@@ -44,15 +44,18 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <span><b>Nombre de mouches capturées</b>: {{ total_tsetse }} </span>
+                        <span style="vertical-align: top;">🪰</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Espèces de tsetse observées</b>: {{ total_tsetse_species }} </span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Nombre de femeles</b>: {{ nb_female }} </span>
+                        <span style="vertical-align: top;">♀️</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Nombre de mâles</b>: {{ nb_male }} </span>
+                        <span style="vertical-align: top;">♂️</span>
                     </li>
                 </ul>
             </div>
@@ -72,16 +75,22 @@
                         <span><b>Type de végétation</b>:  {{ trap["vegetation"] }}</span>
                     </li>
                     <li class="list-group-item">
-                        <span><b>Nombre de plantes identifiées</b>: {{ nb_plant_identifications }}</span>
+                        <span><b>Nombre d'espèces de plantes identifiées</b>: {{ plant_species | length }}</span>
+                        <span style="vertical-align: top;">🌱</span>
                     </li>
                     <li class="list-group-item">
-                        <span><b>Nombre d'espèces de plantes identifiées</b>: {{ nb_plant_species }}</span>
+                        <span><b>Nombre de familles botaniques représentées</b>: {{ plant_families }}</span>
+                        <span style="vertical-align: top;">🌿</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Altitude</b>: {{ trap["elevation"] }}m</span>
+                        <span style="vertical-align: top;">⛰️</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Cours d'eau au moment de la capture</b>: {{ trap["river"] }}</span>
+                        {% if trap["river"] == "Oui" %}
+                            <span style="vertical-align: top;">💧</span>
+                        {% endif %}
                     </li>
                     <li class="list-group-item">
                         <span><b>Type de sol principal</b>: {{ trap["soil_main"] }}</span>
@@ -96,25 +105,48 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <span><b>Niveau général d'anthropisation</b>: {{ trap["anthropization"] }}</span>
+                        <span><b>Niveau général d'anthropisation</b>:
+                            <meter min="0" max="4" low="1.1" , high="2" optimum="0.99"
+                                   value="{{ trap['anthropization'][1] }}"></meter>
+                            {{ trap["anthropization"][0] }}
+                        </span>
                     </li>
                     <li class="list-group-item">
-                        <span><b>Niveau de pollution (déchets)</b>:  {{ trap["waste_pollution"] }}</span>
+                        <span><b>Niveau de pollution (déchets)</b>:
+                            <meter min="0" max="4" low="1.1" , high="2" optimum="0.99"
+                                   value="{{ trap['waste_pollution'][1] }}"></meter>
+                            {{ trap["waste_pollution"][0] }}
+                        </span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Présence de phytosanitaires</b>: {{ trap["phytosanitary_products"] }}</span>
+                        {% if trap["phytosanitary_products"] == "Oui" %}
+                            <span style="vertical-align: top;">🛢</span>
+                        {% endif %}
                     </li>
                     <li class="list-group-item">
                         <span><b>Zone paturée</b>: {{ trap["livestock"] }}</span>
+                        {% if trap["livestock"] == "Oui" %}
+                            <span style="vertical-align: top;">🐮</span>
+                        {% endif %}
                     </li>
                     <li class="list-group-item">
                         <span><b>Traces de feu</b>: {{ trap["fire_marks"] }}</span>
+                        {% if trap["fire_marks"] == "Oui" %}
+                        <span style="vertical-align: top;">🔥</span>
+                        {% endif %}
                     </li>
                     <li class="list-group-item">
                         <span><b>Coupe de bois constatée</b>: {{ trap["logging"] }}</span>
+                        {% if trap["logging"] == "Oui" %}
+                            <span style="vertical-align: top;">🪵</span>
+                        {% endif %}
                     </li>
                     <li class="list-group-item">
                         <span><b>Activités minières (ou liées)</b>: {{ trap["mining_related_activity"] }}</span>
+                        {% if trap["mining_related_activity"] == "Oui" %}
+                            <span style="vertical-align: top;">🪨⛏️</span>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
@@ -124,28 +156,33 @@
         <div class="col pe-0 ps-0">
             <div class="card">
                 <div class="card-header">
-                    <h5>Espèces de plantes identifiées</h5>
+                    <h5>Identifications botaniques</h5>
                 </div>
-                <table class="table table-bordered mb-0">
+                <table class="table table-bordered mb-0 table-striped table-hover"
+                       data-toggle="table"
+                       data-pagination="true"
+                       data-sortable="true">
                     <thead>
                     <tr>
-                        <th>Nom complet</th>
-                        <th>Famille</th>
-                        <th>Genre</th>
-                        <th>Espèce</th>
-                        <th>Rang taxonomique</th>
-                        <th>Collecteur</th>
+                        <th data-sortable="true">Nom complet</th>
+                        <th data-sortable="true">Famille</th>
+                        <th data-sortable="true">Genre</th>
+                        <th data-sortable="true">Espèce</th>
+                        <th data-sortable="true">Auteur</th>
+                        <th data-sortable="true">Collecteur</th>
+                        <th data-sortable="true">Lien POWO</th>
                     </tr>
                     </thead>
                     <tbody>
                     {% for tax in plant_species %}
                     <tr>
-                        <td>{{ tax.full_name }}</td>
-                        <td>{{ tax.family }}</td>
-                        <td>{{ tax.genus }}</td>
-                        <td>{{ tax.species }}</td>
-                        <td>{{ tax.rank }}</td>
+                        <td><b><em>{{ tax.full_name }}</em></b></td>
+                        <td><em>{{ tax.family }}</em></td>
+                        <td><em>{{ tax.genus }}</em></td>
+                        <td><em>{{ tax.species }}</em></td>
+                        <td>{{ tax.author }}</td>
                         <td>{{ tax.collector }}</td>
+                        <td><a href="{{ tax.powo }}">{{ tax.id }}</a></td>
                     </tr>
                     {% endfor %}
                     </tbody>

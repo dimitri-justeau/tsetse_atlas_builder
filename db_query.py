@@ -10,6 +10,10 @@ def get_engine():
     engine = create_engine("postgresql://niamoto:niamoto@localhost:5432/atlas_tsetse")
     return engine
 
+#######################################
+#### Get administrative boundaries ####
+#######################################
+
 def get_regions():
     engine = get_engine()
     regions = gpd.read_postgis(
@@ -31,6 +35,10 @@ def get_all_prefectures():
     )
     return prefectures
 
+################################
+#### Get country level data ####
+################################
+
 def get_all_traps():
     engine = get_engine()
     traps = gpd.read_postgis(
@@ -48,10 +56,47 @@ def get_total_tsetse_species():
     engine = get_engine()
     res = pd.read_sql(
         """
-        SELECT COUNT(DISTINCT tsetse_catch.species) as nb_species FROM tsetse_catch;
+        SELECT COUNT(DISTINCT tsetse_catch.species) as nb_species FROM tsetse_catch
+        WHERE tsetse_catch.count > 0;
         """, engine
     )
     return res["nb_species"].iloc[0]
+
+def get_total_number_of_habitats():
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT COUNT(DISTINCT habitat.vegetation) as nb_habitats FROM habitat;
+        """, engine
+    )
+    return res["nb_habitats"].iloc[0]
+
+def get_total_number_of_plants_identifications():
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT COUNT(*) as nb_rows FROM trap_plant_species;
+        """, engine
+    )
+    return res["nb_rows"].iloc[0]
+
+def get_all_plants_species():
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT taxon.*, COUNT(trap_plant_species.trap_id) as nb_occurrences FROM taxon
+            INNER JOIN trap_plant_species ON trap_plant_species.taxon_id = taxon.id
+            GROUP BY taxon.id;
+        """, engine
+    )
+    res.fillna("", inplace=True)
+    res["powo"] = res["id"].apply(lambda x: get_powo_url(x))
+    return res
+
+
+###############################
+#### Get region level data ####
+###############################
 
 def get_region_traps(region_id):
     engine = get_engine()
@@ -78,10 +123,61 @@ def get_region_tsetse_species(region_id):
             INNER JOIN locality ON locality.id = tsetse_trap.locality_id
             INNER JOIN sous_prefecture ON sous_prefecture.id = locality.sous_prefecture_id
             INNER JOIN prefecture ON prefecture.id = sous_prefecture.prefecture_id
-            WHERE prefecture.region_id = {};
+            WHERE prefecture.region_id = {} AND tsetse_catch.count > 0;
         """.format(region_id), engine
     )
     return res["nb_species"].iloc[0]
+
+
+def get_region_number_of_habitats(region_id):
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT COUNT(DISTINCT habitat.vegetation) as nb_habitats FROM habitat
+            INNER JOIN tsetse_trap ON habitat.trap_id = tsetse_trap.id
+            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
+            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
+            INNER JOIN prefecture ON sous_prefecture.prefecture_id = prefecture.id
+            WHERE prefecture.region_id = {};
+        """.format(region_id), engine
+    )
+    return res["nb_habitats"].iloc[0]
+
+def get_region_number_of_plants_identifications(region_id):
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT COUNT(*) as nb_rows FROM trap_plant_species
+            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
+            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
+            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
+            INNER JOIN prefecture ON sous_prefecture.prefecture_id = prefecture.id
+            WHERE prefecture.region_id = {};
+        """.format(region_id), engine
+    )
+    return res["nb_rows"].iloc[0]
+
+def get_region_plants_species(region_id):
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT taxon.*, COUNT(trap_plant_species.trap_id) as nb_occurrences FROM taxon
+            INNER JOIN trap_plant_species ON trap_plant_species.taxon_id = taxon.id
+            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
+            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
+            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
+            INNER JOIN prefecture ON sous_prefecture.prefecture_id = prefecture.id
+            WHERE prefecture.region_id = {}
+            GROUP BY taxon.id;
+        """.format(region_id), engine
+    )
+    res.fillna("", inplace=True)
+    res["powo"] = res["id"].apply(lambda x: get_powo_url(x))
+    return res
+
+###################################
+#### Get prefecture level data ####
+###################################
 
 def get_prefecture_traps(prefecture_id):
     engine = get_engine()
@@ -106,10 +202,57 @@ def get_prefecture_tsetse_species(prefecture_id):
             INNER JOIN tsetse_trap ON tsetse_trap.id = tsetse_catch.trap_id
             INNER JOIN locality ON locality.id = tsetse_trap.locality_id
             INNER JOIN sous_prefecture ON sous_prefecture.id = locality.sous_prefecture_id
-            WHERE sous_prefecture.prefecture_id = {};
+            WHERE sous_prefecture.prefecture_id = {} AND tsetse_catch.count > 0;
         """.format(prefecture_id), engine
     )
     return res["nb_species"].iloc[0]
+
+def get_prefecture_number_of_habitats(prefecture_id):
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT COUNT(DISTINCT habitat.vegetation) as nb_habitats FROM habitat
+            INNER JOIN tsetse_trap ON habitat.trap_id = tsetse_trap.id
+            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
+            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
+            WHERE sous_prefecture.prefecture_id = {};
+        """.format(prefecture_id), engine
+    )
+    return res["nb_habitats"].iloc[0]
+
+def get_prefecture_number_of_plants_identifications(prefecture_id):
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT COUNT(*) as nb_rows FROM trap_plant_species
+            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
+            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
+            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
+            WHERE sous_prefecture.prefecture_id = {};
+        """.format(prefecture_id), engine
+    )
+    return res["nb_rows"].iloc[0]
+
+def get_prefecture_plants_species(prefecture_id):
+    engine = get_engine()
+    res = pd.read_sql(
+        """
+        SELECT taxon.*, COUNT(trap_plant_species.trap_id) as nb_occurrences FROM taxon
+            INNER JOIN trap_plant_species ON trap_plant_species.taxon_id = taxon.id
+            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
+            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
+            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
+            WHERE sous_prefecture.prefecture_id = {}
+            GROUP BY taxon.id;
+        """.format(prefecture_id), engine
+    )
+    res.fillna("", inplace=True)
+    res["powo"] = res["id"].apply(lambda x: get_powo_url(x))
+    return res
+
+#############################
+#### Get trap level data ####
+#############################
 
 def get_trap(trap_key):
     engine = get_engine()
@@ -149,6 +292,8 @@ def get_trap_plant_species(trap_key):
             WHERE tsetse_trap.code = '{}';
         """.format(trap_key), engine
     )
+    res.fillna("", inplace=True)
+    res["powo"] = res["id"].apply(lambda x: get_powo_url(x))
     return res
 
 def get_trap_tsetse_species(trap_code):
@@ -157,7 +302,7 @@ def get_trap_tsetse_species(trap_code):
         """
         SELECT COUNT(DISTINCT tsetse_catch.species) as nb_species FROM tsetse_catch
             INNER JOIN tsetse_trap ON tsetse_trap.id = tsetse_catch.trap_id
-            WHERE tsetse_trap.code = '{}';
+            WHERE tsetse_trap.code = '{}' AND tsetse_catch.count > 0;
         """.format(trap_code), engine
     )
     return res["nb_species"].iloc[0]
@@ -184,110 +329,77 @@ def get_trap_tsetse_females(trap_code):
     )
     return res["nb_female"].iloc[0]
 
-def get_total_number_of_habitats():
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(DISTINCT habitat.vegetation) as nb_habitats FROM habitat;
-        """, engine
-    )
-    return res["nb_habitats"].iloc[0]
+################
+#### Helper ####
+################
 
-def get_total_number_of_plants_identifications():
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(*) as nb_rows FROM trap_plant_species;
-        """, engine
-    )
-    return res["nb_rows"].iloc[0]
+def get_numeric_level(df, key):
+    correspondence = {
+        "very_low": 0,
+        "low": 1,
+        "moderate": 2,
+        "high": 3,
+        "very_high": 4,
+    }
+    res = df[key].apply(lambda x: correspondence[x]).iloc[0]
+    return res
 
-def get_total_number_of_plants_species():
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(DISTINCT trap_plant_species.taxon_id) as nb_species FROM trap_plant_species;
-        """, engine
-    )
-    return res["nb_species"].iloc[0]
+def get_powo_url(taxon_id):
+    return "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:{}".format(taxon_id)
 
-def get_region_number_of_habitats(region_id):
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(DISTINCT habitat.vegetation) as nb_habitats FROM habitat
-            INNER JOIN tsetse_trap ON habitat.trap_id = tsetse_trap.id
-            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
-            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
-            INNER JOIN prefecture ON sous_prefecture.prefecture_id = prefecture.id
-            WHERE prefecture.region_id = {};
-        """.format(region_id), engine
-    )
-    return res["nb_habitats"].iloc[0]
+labels = {
+    'urban_populated': "Zone urbaine",
+    'rural_populated': "Zone rurale",
+    'agricultural': "Zone agricole",
+    'forest_dominated': "Zone forestière",
+    'woodland_dominated': "Zone boisée",
+    'grassland_dominated': "Zone de prairie",
+    'rain_forest': "Forêt humide",
+    'short_forest': "Forêt basse",
+    'gallery_forest': "Forêt galerie",
+    'woodland': "Forêt claire",
+    'bushland': "Formation buissonnante",
+    'thicket': "Fourré",
+    'shrubland': "Formation arbustive",
+    'grassland': "Formation herbeuse",
+    'wooded_grassland': "Formation herbeuse boisée",
+    'mangrove': "Mangrove",
+    'lowland': "Bas-fond",
+    'swamp': "Marais",
+    'palm_plantation': "Palmeraie",
+    'timber_plantation': "Plantation sylvicole",
+    'hevea_plantation': "Plantation d'hévea",
+    'fruit_tree_plantation': "Vergers",
+    'agroforestry': "Agroforesterie",
+    'banana_plantation': "Bananeraie",
+    'vegetable_field': "Maraichage",
+    'rice_field': "Rizière",
+    'cultivated_lowland': "Bas-fond cultivé",
+    'fallow': "Jachère",
+    'sandy': "Sableux",
+    'clayey': "Argileux",
+    'silty': "Limoneux",
+    'sandy_clay': "Sablo-limoneux",
+    'clayey_sand': "Argilo-sableux",
+    'silty_clay': "Limono-argileux",
+    'clayey_silt': "Argilo-limoneux",
+    'sandy_silt': "Sablo-limoneux",
+    'silty_sand': "Limono-sableux",
+    'lateritic': "Latéritique",
+    'rocky': "Rocheux",
+    'hydromorphic': "Hydromorphique",
+    'silty_rock': "Limono-rocheux",
+    'very_low': "Très faible",
+    'low': "Faible",
+    'moderate': "Modéré",
+    'high': "Élevé",
+    'very_high': "Très élevé",
+    True: "Oui",
+    False: "Non",
+    None: "Inconnu",
+}
 
-def get_region_number_of_plants_identifications(region_id):
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(*) as nb_rows FROM trap_plant_species
-            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
-            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
-            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
-            INNER JOIN prefecture ON sous_prefecture.prefecture_id = prefecture.id
-            WHERE prefecture.region_id = {};
-        """.format(region_id), engine
-    )
-    return res["nb_rows"].iloc[0]
-
-def get_region_number_of_plants_species(region_id):
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(DISTINCT trap_plant_species.taxon_id) as nb_species FROM trap_plant_species
-            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
-            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
-            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
-            INNER JOIN prefecture ON sous_prefecture.prefecture_id = prefecture.id
-            WHERE prefecture.region_id = {};
-        """.format(region_id), engine
-    )
-    return res["nb_species"].iloc[0]
-
-def get_prefecture_number_of_habitats(prefecture_id):
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(DISTINCT habitat.vegetation) as nb_habitats FROM habitat
-            INNER JOIN tsetse_trap ON habitat.trap_id = tsetse_trap.id
-            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
-            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
-            WHERE sous_prefecture.prefecture_id = {};
-        """.format(prefecture_id), engine
-    )
-    return res["nb_habitats"].iloc[0]
-
-def get_prefecture_number_of_plants_identifications(prefecture_id):
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(*) as nb_rows FROM trap_plant_species
-            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
-            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
-            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
-            WHERE sous_prefecture.prefecture_id = {};
-        """.format(prefecture_id), engine
-    )
-    return res["nb_rows"].iloc[0]
-
-def get_prefecture_number_of_plants_species(region_id):
-    engine = get_engine()
-    res = pd.read_sql(
-        """
-        SELECT COUNT(DISTINCT trap_plant_species.taxon_id) as nb_species FROM trap_plant_species
-            INNER JOIN tsetse_trap ON trap_plant_species.trap_id = tsetse_trap.id
-            INNER JOIN locality ON tsetse_trap.locality_id = locality.id
-            INNER JOIN sous_prefecture ON locality.sous_prefecture_id = sous_prefecture.id
-            WHERE sous_prefecture.prefecture_id = {};
-        """.format(region_id), engine
-    )
-    return res["nb_species"].iloc[0]
+def translate_label(text):
+    if text in labels:
+        return labels[text]
+    return text

@@ -23,9 +23,11 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <span><b>Nombre total de pièges</b>: {{ traps | length }}</span>
+                        <span style="vertical-align: top;">🪤</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Nombre de mouches capturées</b>: {{ total_tsetse }}</span>
+                        <span style="vertical-align: top;">🪰</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Espèces de tsetse observées</b>: {{ total_tsetse_species }}</span>
@@ -41,14 +43,55 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
                         <span><b>Types d'habitats rencontrés</b>: {{ nb_habitats }}</span>
+                        <span style="vertical-align: top;">⛰️</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Nombre de plantes identifiées</b>: {{ nb_plant_identifications }}</span>
+                        <span style="vertical-align: top;">🌱</span>
                     </li>
                     <li class="list-group-item">
                         <span><b>Nombre d'espèces de plantes identifiées</b>: {{ nb_plant_species }}</span>
+                        <span style="vertical-align: top;">🌿</span>
                     </li>
                 </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col pe-0 ps-0">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Identifications botaniques</h5>
+                </div>
+                <table class="table table-bordered mb-0 table-striped table-hover"
+                       data-toggle="table"
+                       data-pagination="true"
+                       data-sortable="true">
+                    <thead>
+                    <tr>
+                        <th data-sortable="true">Nom complet</th>
+                        <th data-sortable="true">Famille</th>
+                        <th data-sortable="true">Genre</th>
+                        <th data-sortable="true">Espèce</th>
+                        <th data-sortable="true">Auteur</th>
+                        <th data-sortable="true">Nombre d'observations</th>
+                        <th data-sortable="true">Lien POWO</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for tax in plant_species %}
+                    <tr>
+                        <td><b><em>{{ tax.full_name }}</em></b></td>
+                        <td><em>{{ tax.family }}</em></td>
+                        <td><em>{{ tax.genus }}</em></td>
+                        <td><em>{{ tax.species }}</em></td>
+                        <td>{{ tax.author }}</td>
+                        <td>{{ tax.nb_occurrences }}</td>
+                        <td><a href="{{ tax.powo }}">{{ tax.id }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

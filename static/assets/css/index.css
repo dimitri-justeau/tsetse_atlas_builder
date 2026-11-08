@@ -14,19 +14,50 @@
     margin: auto;
 }
 
-.region-label {
-    font-weight: 400;
+[data-bs-theme="light"] {
+    .national-label {
+        color: #3b3b3b;
+    }
+
+    .region-label {
+        font-weight: 400;
+        color: #3b3b3b;
+    }
+
+    .prefecture-label {
+        padding-left: 20px;
+        font-weight: 400;
+        color: #3b3b3b;
+    }
+
+    .current {
+        color: #004e85;
+        font-weight: bold;
+        text-decoration: underline;
+    }
 }
 
-.prefecture-label {
-    padding-left: 20px;
-    font-weight: 400;
-}
+[data-bs-theme="dark"] {
+    .national-label {
+        color: #9d9d9d;
+    }
 
-.current {
-    color: #004e85;
-    font-weight: bold;
-    text-decoration: underline;
+    .region-label {
+        font-weight: 400;
+        color: #9d9d9d;
+    }
+
+    .prefecture-label {
+        padding-left: 20px;
+        font-weight: 400;
+        color: #9d9d9d;
+    }
+
+    .current {
+        color: #5a85b7;
+        font-weight: bold;
+        text-decoration: underline;
+    }
 }
 
 #map {

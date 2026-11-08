@@ -2,74 +2,10 @@ import os.path
 import shutil
 from pathlib import Path
 
-import pandas as pd
 from jinja2 import Environment, FileSystemLoader
 
 from config import Config
-from db_query import get_regions, get_prefectures, get_all_prefectures, get_all_traps, get_region_traps, \
-    get_prefecture_traps, get_total_tsetse_species, get_region_tsetse_species, get_prefecture_tsetse_species, get_trap, \
-    get_trap_tsetse_species, get_trap_plant_species, get_total_number_of_habitats, \
-    get_total_number_of_plants_identifications, get_total_number_of_plants_species, get_region_number_of_habitats, \
-    get_region_number_of_plants_species, get_prefecture_number_of_habitats, get_prefecture_number_of_plants_species, \
-    get_region_number_of_plants_identifications, get_prefecture_number_of_plants_identifications, get_trap_tsetse_males, \
-    get_trap_tsetse_females, get_trap_general_info
-
-labels = {
-    'urban_populated': "Zone urbaine",
-    'rural_populated': "Zone rurale",
-    'agricultural': "Zone agricole",
-    'forest_dominated': "Zone forestière",
-    'woodland_dominated': "Zone boisée",
-    'grassland_dominated': "Zone de prairie",
-    'rain_forest': "Forêt humide",
-    'short_forest': "Forêt basse",
-    'gallery_forest': "Forêt galerie",
-    'woodland': "Forêt claire",
-    'bushland': "Formation buissonnante",
-    'thicket': "Fourré",
-    'shrubland': "Formation arbustive",
-    'grassland': "Formation herbeuse",
-    'wooded_grassland': "Formation herbeuse boisée",
-    'mangrove': "Mangrove",
-    'lowland': "Bas-fond",
-    'swamp': "Marais",
-    'palm_plantation': "Palmeraie",
-    'timber_plantation': "Plantation sylvicole",
-    'hevea_plantation': "Plantation d'hévea",
-    'fruit_tree_plantation': "Vergers",
-    'agroforestry': "Agroforesterie",
-    'banana_plantation': "Bananeraie",
-    'vegetable_field': "Maraichage",
-    'rice_field': "Rizière",
-    'cultivated_lowland': "Bas-fond cultivé",
-    'fallow': "Jachère",
-    'sandy': "Sableux",
-    'clayey': "Argileux",
-    'silty': "Limoneux",
-    'sandy_clay': "Sablo-limoneux",
-    'clayey_sand': "Argilo-sableux",
-    'silty_clay': "Limono-argileux",
-    'clayey_silt': "Argilo-limoneux",
-    'sandy_silt': "Sablo-limoneux",
-    'silty_sand': "Limono-sableux",
-    'lateritic': "Latéritique",
-    'rocky': "Rocheux",
-    'hydromorphic': "Hydromorphique",
-    'silty_rock': "Limono-rocheux",
-    'very_low': "Très faible",
-    'low': "Faible",
-    'moderate': "Modéré",
-    'high': "Élevé",
-    'very_high': "Très élevé",
-    True: "Oui",
-    False: "Non",
-    None: "Inconnu",
-}
-
-def translate_label(text):
-    if text in labels:
-        return labels[text]
-    return text
+from db_query import *
 
 if __name__ == '__main__':
     # Load environment
@@ -116,6 +52,7 @@ if __name__ == '__main__':
     for index, trap in all_traps.iterrows():
         trap_data = get_trap(trap["code"])
         trap_plant_species = get_trap_plant_species(trap["code"])
+        nb_plant_families = len(trap_plant_species["family"].unique())
         trap_infos = get_trap_general_info(trap["code"])
         individual_traps[index] = {
             "locality": trap_infos["locality"].iloc[0],
@@ -127,8 +64,8 @@ if __name__ == '__main__':
             "soil_main": translate_label(trap_data["soil_main"][0]),
             "soil_secondary": translate_label(trap_data["soil_secondary"][0]),
             "river": translate_label(trap_data["river"][0]),
-            "waste_pollution": translate_label(trap_data["waste_pollution"][0]),
-            "anthropization": translate_label(trap_data["waste_pollution"][0]),
+            "waste_pollution": [translate_label(trap_data["waste_pollution"][0]), get_numeric_level(trap_data, "waste_pollution")],
+            "anthropization": [translate_label(trap_data["anthropization"][0]), get_numeric_level(trap_data, "anthropization")],
             "phytosanitary_products": translate_label(trap_data["phytosanitary_products"][0]),
             "livestock": translate_label(trap_data["livestock"][0]),
             "logging": translate_label(trap_data["logging"][0]),
@@ -138,7 +75,8 @@ if __name__ == '__main__':
             "start_date": trap_data["start_date"][0],
             "end_date": trap_data["end_date"][0],
             "total_tsetse": trap_data["total_tsetse"][0],
-            "plant_species": trap_plant_species.to_dict(orient="records")
+            "plant_species": trap_plant_species.to_dict(orient="records"),
+            "nb_plant_families": nb_plant_families,
         }
         trap_data.to_file(os.path.join(Config.ASSETS_ROOT, "geojson", "traps", "{}.geojson".format(trap["code"])), driver="GeoJSON")
     # Clear output dir
@@ -147,6 +85,7 @@ if __name__ == '__main__':
     Path("output").mkdir()
     # Load and render templates
     # Index
+    plant_species = get_all_plants_species()
     template = env.get_template('home/index.html')
     html_output = template.render(
         config=Config,
@@ -157,7 +96,8 @@ if __name__ == '__main__':
         total_tsetse_species=get_total_tsetse_species(),
         nb_habitats=get_total_number_of_habitats(),
         nb_plant_identifications=get_total_number_of_plants_identifications(),
-        nb_plant_species=get_total_number_of_plants_species(),
+        nb_plant_species=len(plant_species),
+        plant_species=plant_species.to_dict(orient="records"),
         current="national",
         root="."
     )
@@ -167,6 +107,7 @@ if __name__ == '__main__':
     Path(os.path.join("output", "regions")).mkdir(exist_ok=True)
     for index, region in regions.iterrows():
         template = env.get_template("home/region_index.html")
+        plant_species = get_region_plants_species(region["id"])
         html_output = template.render(
             config=Config,
             regions=regions,
@@ -177,7 +118,8 @@ if __name__ == '__main__':
             total_tsetse_species=get_region_tsetse_species(region["id"]),
             nb_habitats=get_region_number_of_habitats(region["id"]),
             nb_plant_identifications=get_region_number_of_plants_identifications(region["id"]),
-            nb_plant_species=get_region_number_of_plants_species(region["id"]),
+            nb_plant_species=len(plant_species),
+            plant_species=plant_species.to_dict(orient="records"),
             current="r_{}".format(region["name"]),
             root=".."
         )
@@ -187,6 +129,7 @@ if __name__ == '__main__':
     Path(os.path.join("output", "prefectures")).mkdir(exist_ok=True)
     for index, pref in all_prefectures.iterrows():
         template = env.get_template("home/prefecture_index.html")
+        plant_species = get_prefecture_plants_species(pref["id"])
         html_output = template.render(
             config=Config,
             regions=regions,
@@ -197,7 +140,8 @@ if __name__ == '__main__':
             total_tsetse_species=get_prefecture_tsetse_species(pref["id"]),
             nb_habitats=get_prefecture_number_of_habitats(pref["id"]),
             nb_plant_identifications=get_prefecture_number_of_plants_identifications(pref["id"]),
-            nb_plant_species=get_prefecture_number_of_plants_species(pref["id"]),
+            nb_plant_species=len(plant_species),
+            plant_species=plant_species.to_dict(orient="records"),
             current="p_{}".format(pref["name"]),
             root=".."
         )
@@ -222,6 +166,7 @@ if __name__ == '__main__':
             nb_male=get_trap_tsetse_males(trap["code"]),
             nb_female=get_trap_tsetse_females(trap["code"]),
             plant_species=individual_traps[index]["plant_species"],
+            plant_families=individual_traps[index]["nb_plant_families"],
             current="{}".format(trap["code"]),
             root=".."
         )
