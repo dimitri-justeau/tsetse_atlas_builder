@@ -1,3 +1,9 @@
+.bi {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
+
 #sidebar-container {
     position: sticky;
     max-height: calc(100vh - 152px);
@@ -69,11 +75,11 @@
 }
 
 .site-title {
-    height: 100%;
-    display:flex;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
+    /*height: 100%;*/
+    width: 65%;
+    text-align: left;
+    /*align-items: center;*/
+    /*justify-content: center;*/
 }
 
 .current-title {
