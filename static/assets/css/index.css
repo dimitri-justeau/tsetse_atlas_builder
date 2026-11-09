@@ -6,13 +6,13 @@
 
 #sidebar-container {
     position: sticky;
-    max-height: calc(100vh - 152px);
+    max-height: calc(100vh - 115px);
     overflow-y: auto;
 }
 
 #dashboard-container {
     position: sticky;
-    max-height: calc(100vh - 152px);
+    max-height: calc(100vh - 115px);
     overflow-y: auto;
 }
 
